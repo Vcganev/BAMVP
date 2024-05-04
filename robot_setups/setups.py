@@ -7,11 +7,11 @@ import numpy as np
 
 
 #threshold = 0.02
-# Setup scaraRobot
+#Setup scaraRobot
 #target_positions = [[0, 3, 1], [3, 0, 1],[-3, 0, 1], [0, -3, 1] ]
 
 def setup_scaraRobot():
-    urdf_file = "C:/Users/victo/OneDrive - bwedu/Dokumente/BA/Matlab/reachabilityExperiment/Ex_1_scaraRobot4/scaraRobot4.urdf"
+    urdf_file = "C:/Users/victo/OneDrive/Dokumente/BA/Matlab/reachabilityExperiment/Ex_1_scaraRobot4/scaraRobot4.urdf"
     #physics_client = p.connect(p.DIRECT)
     #p.setRealTimeSimulation(1)
     #p.setPhysicsEngineParameter(numSolverIterations=1000)
