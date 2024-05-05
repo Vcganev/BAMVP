@@ -5,7 +5,11 @@ import pybullet_industrial as pi
 import numpy as np
 
 
-
+def setup_robot_by_type(robot_type):
+       if robot_type == "Scara Robot":
+              return setup_scaraRobot
+       else:
+              raise ValueError("Unsupported robot type: ", robot_type)
 #threshold = 0.02
 #Setup scaraRobot
 #target_positions = [[0, 3, 1], [3, 0, 1],[-3, 0, 1], [0, -3, 1] ]
