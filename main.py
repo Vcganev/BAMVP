@@ -27,8 +27,11 @@ def main():
     positions, orientations = simulationEnvironment.run_simulation()
     #print("These are the point: ", positions, orientations)
     evaluate_results = simulationEnvironment.evaluate(positions, orientations)
+    llm_evaluation = LLM.evaluate_choice(robot_setup, task_description, evaluate_results)
+    
+    print(llm_evaluation)
 
-    print("Results ", evaluate_results)
+    #print("Results: ", evaluate_results)
 
 
 if __name__ == "__main__":
