@@ -4,18 +4,36 @@ from openai import OpenAI
 
 client = OpenAI()
 
+
 def get_robot_recommendation(task_description):
 
     model = 'gpt-4'
     system_message = {
-        "role": "system",
-        "content": "As a mechanical engineer working in the industry, your responsibility involves pinpointing and selecting the ideal robotic type for a specified task. Only give out the Robot type, no explanation or anything else. Just the Solution!"
+            "role": "system",
+            "content": """
+            As a mechanical engineer working in the industry, your responsibility involves pinpointing and selecting the ideal robotic type for a specified task.
+            You get to choose from a list of differnet Robots. Only choose from that List! Never make up a Robot! Only output the Robot that you chose, no extensive exxplenation!
+            Robot Options:
+
+            SCARA Robot:
+                - DoF: 3 (2 revolute, 1 prismatic)
+                - Reach: between 0m and 10m 
+
+            Gantry Robot:
+                - DoF: 3 (all linear)
+                - Reach: up to 10m x 10m x 10m (XYZ)
+
+            Articulated Robot:
+                - DoF: 6
+                - Reach: up to 5m
+            """
     }
 
     user_message = {
-        "role": "user",
-        "content": task_description
+            "role": "user",
+            "content": task_description
     }
+
 
     num_iterations = 20
     responses = []
@@ -33,7 +51,7 @@ def get_robot_recommendation(task_description):
     robot_type = marvin.classify(
 
         responses,
-        labels=["Scara Robot", "Articulated Robot", "Gantry Robot", "Delta Robot"]
+        labels=["Scara Robot", "Articulated Robot", "Gantry Robot"]
 
     )
 
