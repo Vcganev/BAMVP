@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<robot name="scara_robot">
+  <!-- Base Link -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.1" radius="0.5"/>
+      </geometry>
+      <material name="grey">
+        <color rgba="0.5 0.5 0.5 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- First prismatic joint (z-direction) -->
+  <joint name="prismatic1_z" type="prismatic">
+    <parent link="base_link"/>
+    <child link="virtual_link1_z"/>
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="0" upper="10" effort="1000" velocity="0.5"/>
+  </joint>
+
+  <!-- Virtual Link 1_z -->
+  <link name="virtual_link1_z"/>
+
+
+  <!-- First rotational joint (rotative1) -->
+  <joint name="rotative1" type="revolute">
+    <parent link="virtual_link1_z"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0.05" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.28" upper="6.28" effort="1000" velocity="0.5"/>
+  </joint>
+
+  <!-- First arm link -->
+  <link name="link1">
+    <visual>
+      <geometry>
+        <cylinder length="1" radius="0.1"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+
+  <!-- Second prismatic joint (x-direction) -->
+  <joint name="prismatic2_x" type="prismatic">
+    <parent link="link1"/>
+    <child link="virtual_link2_x"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="0" upper="4" effort="500" velocity="0.2"/>
+  </joint>
+
+  <!-- Virtual Link 2_x -->
+  <link name="virtual_link2_x"/>
+
+  <!-- Second rotational joint (rotative2) -->
+  <joint name="rotative2" type="revolute">
+    <parent link="virtual_link2_x"/>
+    <child link="link2"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-6.28" upper="6.28" effort="1000" velocity="0.5"/>
+  </joint>
+
+  <!-- Second arm link -->
+  <link name="link2">
+    <visual>
+      <geometry>
+        <cylinder length="1" radius="0.1"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+  </link>
+
+  <!-- Third prismatic joint (x-direction) -->
+  <joint name="prismatic3_x" type="prismatic">
+    <parent link="link2"/>
+    <child link="end_effector"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/> <!-- Assuming full extension of link2 -->
+    <axis xyz="1 0 0"/>
+    <limit lower="0" upper="4" effort="500" velocity="0.2"/>
+  </joint>
+
+  <!-- End effector -->
+  <link name="end_effector"> 
+    <visual>
+      <geometry>
+        <sphere radius="0.1"/>
+      </geometry>
+      <material name="green">
+        <color rgba="0 1 0 1"/>
+      </material>
+    </visual>
+  </link>
+
+</robot>
