@@ -4,7 +4,7 @@ from simulation import environment
 from LLM import LLM
 
 def get_user_input():
-    print("Welcome to the Robot Customization Program!")
+    print("Welcome to the the best Robot Program!")
     print("Please describe your use case in detail:")
     task_description = input("Use Case: ")
 
@@ -61,7 +61,7 @@ def main():
     #print("These are the point: ", positions, orientations)
     evaluate_results = simulationEnvironment.evaluate(positions, orientations)
     llm_evaluation = LLM.evaluate_choice(robot_setup, task_description, evaluate_results)
-    
+    print(evaluate_results)
     print(llm_evaluation)
 
     #print("Results: ", evaluate_results)
