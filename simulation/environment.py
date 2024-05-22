@@ -65,7 +65,3 @@ class MetaPybulletIndustrialEnvironment:
         # Check if the absolute value of the dot product is close to 1, accounting for quaternion double-cover
         return abs(dot_product) >= 1 - tolerance
      
-
-
-
-

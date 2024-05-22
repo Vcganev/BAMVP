@@ -9,6 +9,15 @@
     </visual>
   </link>
 
+  <link name = "workstation">
+  </link>
+
+  <joint name = "transformation" type = "fixed">
+  <parent link = "base_link"/>
+  <child link = "workstation"/>
+  <origin xyz = "0 0 0" rpy ="0 0 0"/>
+  </joint>
+
   <!-- Virtual Link 1 -->
   <link name="virtual_link_1"/>
 
