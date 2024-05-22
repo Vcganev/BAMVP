@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     cell_urdf = "C:/Users/victo/OneDrive/Dokumente/BA/REALMVP/BAMVP/URDF Codes/scaraRobot.urdf" 
  
-    robot_cell = PybulletCellModel(cell_urdf, 'end_effector', workstation_frames = ["workstation"], circle_radius=0.1)
+    robot_cell = PybulletCellModel(cell_urdf, 'end_effector', gui=False , workstation_frames = ["workstation"], circle_radius=0.1)
 
     toolpath = pi.linear_interpolation(np.array([0.0, 3.0, 1.0]), [3.0, 0.0, 1.0], 10, [0.0, 0.0, 0.965925, 0.25881905], [0.0, 0.0, 0.5, 0.866])
 
@@ -24,13 +24,29 @@ if __name__ == "__main__":
 
    
     solution = optimizer.optimize_2d_paths()
-
+    optimized_values = solution.value(optimizer.q_design)
     # Apply the optimized design state to the robot
     robot_cell.set_design_state(solution.value(optimizer.q_design), 200)
+    joint_states = robot_cell.set_design_state(solution.value(optimizer.q_design), 200)
     
+    print("Optimized Design State:", optimized_values)
     
-    print("This is the Robot Cell", robot_cell)
+    """try:
+        prismatic1_z_length = optimized_values[0]
+        prismatic2_x_length = optimized_values[1]
+        prismatic3_x_length = optimized_values[2]
 
+        print("Required lengths for prismatic joints:")
+        print("Prismatic1_z: ", prismatic1_z_length)
+        print("Prismatic2_x: ", prismatic2_x_length)
+        print("Prismatic3_x: ", prismatic3_x_length)
+
+    except IndexError as e:
+        print("Error accessing optimization results:", e)
+        print("Check the structure of the solution object:", optimized_values)
+    
+    print("This is the Robot Cell", robot_cell)"""
+    """
     # Extract and plot the joint trajectory
     joint_trajectory = solution.value(optimizer.q_moving)
     print("This is the join trajectory i guess: ", joint_trajectory)
@@ -41,15 +57,16 @@ if __name__ == "__main__":
     plt.ylabel('Joint Position')
     plt.show()
 
-    # Continuous simulation loop (this will keep the simulation running)
-    #while True:
-     #   for i, joint_values in enumerate(joint_trajectory.T):
+     #Continuous simulation loop (this will keep the simulation running)
+    while True:
+        for i, joint_values in enumerate(joint_trajectory.T):
 
-      #      if i == 0:
-       #         robot_cell.set_joint_position(joint_values,True)
+            if i == 0:
+                robot_cell.set_joint_position(joint_values,True)
 
-        #        robot_cell._execute_simulation_steps(0, 400)
-         #   else:
-          #      robot_cell.set_joint_position(joint_values,True)
+                robot_cell._execute_simulation_steps(0, 400)
+            else:
+                robot_cell.set_joint_position(joint_values,True)
 
-           #     robot_cell._execute_simulation_steps(0.0000001, 60)
+                robot_cell._execute_simulation_steps(0.1, 220)
+"""
