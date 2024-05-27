@@ -5,15 +5,9 @@ from openai import OpenAI
 client = OpenAI()
 
 urdf_codes = {
-    "Scara 1": "path/to/scara1.urdf",
-    "Scara 2": "path/to/scara2.urdf",
-    "Scara 3": "path/to/scara3.urdf",
-    "Gantry 1": "path/to/gantry1.urdf",
-    "Gantry 2": "path/to/gantry2.urdf",
-    "Gantry 3": "path/to/gantry3.urdf",
-    "Articulated 1": "path/to/articulated1.urdf",
-    "Articulated 2": "path/to/articulated2.urdf",
-    "Articulated 3": "path/to/articulated3.urdf"
+    "Scara Robot": "C:/Users/victo/OneDrive/Dokumente/BA/REALMVP/BAMVP/URDF Codes/scaraRobot.urdf",
+    "Gantry Robot": "path/to/gantry3.urdf",
+    "Articulated Robot": "path/to/articulated1.urdf",
 }
 
 
@@ -25,56 +19,19 @@ system_message = {
         You get to choose from a list of differnet Robots and configurations that are available. Only choose from that List! Never make up a Robot!
         Robot Options:
 
-        SCARA Robots:
-        SCARA 1:
+        SCARA Robot:
             - DoF: 3 (2 revolute, 1 prismatic)
-            - Reach: 5m (2m per arm link + 1m prismatic extension)
-            - Speed Limits: 0.7 rad/s (revolute), 0.3 m/s (prismatic)
-            - Joints Effort: 1200 (revolute), 600 (prismatic)
-        SCARA 2:
-            - DoF: 4 (3 revolute, 1 prismatic)
-            - Reach: 4m (1.5m per arm link + 1m prismatic extension)
-            - Speed Limits: 0.6 rad/s (revolute), 0.25 m/s (prismatic)
-            - Joints Effort: 800 (revolute), 400 (prismatic)
-        SCARA 3:
-            - DoF: 3 (2 revolute, 1 prismatic)
-            - Reach: 6m (2.5m per arm link + 1m prismatic extension)
-            - Speed Limits: 0.8 rad/s (revolute), 0.4 m/s (prismatic)
-            - Joints Effort: 1000 (revolute), 700 (prismatic)
+            - Reach: between 0m and 10m 
 
         Gantry Robots:
         Gantry 1:
             - DoF: 3 (all linear)
-            - Reach: 3m x 3m x 3m (XYZ)
-            - Speed Limits: 0.5 m/s (all axes)
-            - Joints Effort: 500 (all axes)
-        Gantry 2:
-            - DoF: 4 (3 linear, 1 rotational)
-            - Reach: 4m x 4m x 2m (XYZ)
-            - Speed Limits: 0.4 m/s (linear), 0.3 rad/s (rotational)
-            - Joints Effort: 600 (linear), 300 (rotational)
-        Gantry 3:
-            - DoF: 3 (all linear)
-            - Reach: 2m x 2m x 4m (XYZ)
-            - Speed Limits: 0.6 m/s (all axes)
-            - Joints Effort: 700 (all axes)
+            - Reach: up to 10m x 10m x 10m (XYZ)
 
         Articulated Robots:
         Articulated 1:
             - DoF: 6
-            - Reach: 2.5m
-            - Speed Limits: 0.5 rad/s (all joints)
-            - Joints Effort: 850 (all joints)
-        Articulated 2:
-            - DoF: 7
-            - Reach: 3m
-            - Speed Limits: 0.4 rad/s (all joints)
-            - Joints Effort: 1000 (all joints)
-        Articulated 3:
-            - DoF: 5
-            - Reach: 1.8m
-            - Speed Limits: 0.6 rad/s (all joints)
-            - Joints Effort: 900 (all joints)
+            - Reach: up to 5m
         """
 }
 

@@ -2,6 +2,7 @@ import pybullet as p
 from robot_setups import setups
 from simulation import environment
 from LLM import LLM
+import optimizer
 
 def get_user_input():
     print("Welcome to the the best Robot Program!")
@@ -38,31 +39,34 @@ def get_user_input():
     return task_description, trajectory
 
 def main():
-    task_description, trajectory = get_user_input()
+    #task_description, trajectory = get_user_input()
+    task_description = "I want a Robot that can move a cube from one conveyer belt to another coveyer belt. They are 1 meter apart."
     robot_type = LLM.get_robot_recommendation(task_description)
-    print("Recommended Robot Type: ", robot_type)
+    #print("Recommended Robot Type: ", robot_type)
+    robot_type = "Scara Robot"
 
     #Hier wird der Optimisierer von Jan aufgerufen
     #Ein neues Robot Objekt mit dem neuen urdf code wird initialisiert
     # Dann wird mit diesem neuen Object die Demo durchgelaufen
+    urdf = setups.setup_robot_by_type(robot_type)
+    print(urdf)
+    robot = optimizer.optimize_joint_states(urdf)
 
-    robot_setup = setups.setup_robot_by_type(robot_type)
+    trajectory = [
 
-    #trajectory = [
-
-    #    ((0.0, 3.0, 1.0), (0.0, 0.0, 0.965925, 0.25881905)),
-    #    ((3.0, 0.0, 1.0), (0.0, 0.0, 0.5, 0.866)),
+        ((0.0, 3.0, 1.0), (0.0, 0.0, 0.965925, 0.25881905)),
+        ((3.0, 0.0, 1.0), (0.0, 0.0, 0.5, 0.866)),
         # more tuples/lists following the same structure 
-    #]
+    ]
 
 
-    simulationEnvironment = environment.MetaPybulletIndustrialEnvironment(robot_setup, trajectory)
+    simulationEnvironment = environment.MetaPybulletIndustrialEnvironment(robot, trajectory)
     positions, orientations = simulationEnvironment.run_simulation()
     #print("These are the point: ", positions, orientations)
     evaluate_results = simulationEnvironment.evaluate(positions, orientations)
-    llm_evaluation = LLM.evaluate_choice(robot_setup, task_description, evaluate_results)
+    #llm_evaluation = LLM.evaluate_choice(robot, task_description, evaluate_results)
     print(evaluate_results)
-    print(llm_evaluation)
+    #print(llm_evaluation)
 
     #print("Results: ", evaluate_results)
 

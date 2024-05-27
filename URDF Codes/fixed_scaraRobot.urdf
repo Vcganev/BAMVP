@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+<robot name="scara_robot_fixed">
+    <material name="blue">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+    </material>
+    <material name="black">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+    <material name="white">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0 1 0 1"/>
+    </material>
+
+    <link name="world"/>
+    <link name="base_link">
+        <visual>
+            <origin xyz="0.0 0.0 0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <cylinder length="0.95" radius="0.1"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+    <joint name="base_joint" type="fixed">
+        <parent link="world"/>
+        <child link="base_link"/>
+    </joint>
+
+    <link name="arm1">
+        <visual>
+            <origin xyz="0.0 -0.5 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.1 2.4189 0.1"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+    </link>
+    <joint name="arm1_joint" type="revolute">
+        <origin xyz="0.0 0.0 0.8" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="arm1"/>
+        <axis xyz="0.0 0.0 1.0"/>
+        <limit lower="-6.28" upper="6.28" effort="1000.0" velocity="1000.0"/>
+    </joint>
+
+    <link name="arm2">
+        <visual>
+            <origin xyz="0.0 0.25 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <box size="0.1 2.10667447 0.1"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+    </link>
+    <joint name="arm2_joint" type="revolute">
+        <origin xyz="0.0 -1.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="arm1"/>
+        <child link="arm2"/>
+        <axis xyz="0.0 0.0 1.0"/>
+        <limit lower="-6.28" upper="6.28" effort="1000.0" velocity="1000.0"/>
+    </joint>
+
+    <!-- Prismatic joint for the end effector to move up and down -->
+    <link name="end_effector">
+        <visual>
+            <geometry>
+                <sphere radius="0.1"/>
+            </geometry>
+            <material name="green"/>
+        </visual>
+    </link>
+    <joint name="end_effector_joint" type="prismatic">
+        <origin xyz="0.0 0.5 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="arm2"/>
+        <child link="end_effector"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-0.5" upper="0.5" effort="500" velocity="0.5"/>
+    </joint>
+</robot>

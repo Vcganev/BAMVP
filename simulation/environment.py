@@ -2,13 +2,13 @@ import time
 import pybullet as p
 import pybullet_industrial as pi
 import numpy as np
-from robot_setups import setups
+#from robot_setups import setups
 
 class MetaPybulletIndustrialEnvironment:
-    def __init__(self, setup_function, trajectory_object):
-        p.connect(p.DIRECT)
+    def __init__(self, robot, trajectory_object):
+        #p.connect(p.GUI)
         p.setPhysicsEngineParameter(numSolverIterations=1500)
-        self.robot = setup_function()
+        self.robot_cell = robot
         self.trajectory = trajectory_object
         #print("trajectory object:", trajectory_object)
 
@@ -17,14 +17,15 @@ class MetaPybulletIndustrialEnvironment:
         positions = []
         orientations = []
         for position, orientation in self.trajectory:  
-            for _ in range(300):
-                self.robot.set_endeffector_pose(position, orientation)
+            for _ in range(600):
+                self.robot_cell.set_endeffector_pose(position, orientation)
                 p.stepSimulation()
-                #endeffector_pose = self.robot.get_endeffector_pose('end_effector')
-            current_position, current_orientation = self.robot.get_endeffector_pose('end_effector')
+            time.sleep(3)
+            current_position, current_orientation = self.robot_cell.get_endeffector_pose('end_effector')
             positions.append(current_position)
             orientations.append(current_orientation)
-            #print("positions n orientations: ",positions, orientations)
+            print("positions n orientations: ",positions, orientations)
+            time.sleep(5)
         return positions, orientations
     
     # Methode um die Ergebnisse der Simulation zu evaluieren
